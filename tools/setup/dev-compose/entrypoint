@@ -29,7 +29,7 @@ if ((EUID == 0)); then
     chown -R vagrant:"$workspace_group" /home/vagrant
 
     exec sudo \
-        --preserve-env=HTTP_PROXY,HTTPS_PROXY,NO_PROXY,NODE_USE_ENV_PROXY,http_proxy,https_proxy,no_proxy,UBUNTU_MIRROR,ZULIP_PATH \
+        --preserve-env=BEHIND_HTTPS_PROXY,EXTERNAL_HOST,HTTP_PROXY,HTTPS_PROXY,NO_PROXY,NODE_USE_ENV_PROXY,http_proxy,https_proxy,no_proxy,UBUNTU_MIRROR,ZULIP_PATH \
         -H -u vagrant "$0" "$@"
 fi
 

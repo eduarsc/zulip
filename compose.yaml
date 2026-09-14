@@ -25,6 +25,8 @@ services:
         hard: 65536
     environment:
       <<: *proxy-environment
+      BEHIND_HTTPS_PROXY: "${BEHIND_HTTPS_PROXY:-}"
+      EXTERNAL_HOST: "${EXTERNAL_HOST:-localhost:9991}"
       NODE_USE_ENV_PROXY: "1"
       UBUNTU_MIRROR: "${UBUNTU_MIRROR:-}"
       ZULIP_PATH: /workspace/zulip

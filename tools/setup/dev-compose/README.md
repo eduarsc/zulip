@@ -29,6 +29,10 @@ The following optional environment variables customize the setup:
 - `HOST_PORT` changes the host HTTP port from `9991`.
 - `WEBPACK_PORT` changes the exposed webpack port from `9994`.
 - `HELP_CENTER_PORT` changes the exposed help center port from `9995`.
+- `EXTERNAL_HOST` sets the host and optional port used in browser-facing URLs.
+  It defaults to `localhost:9991`.
+- `BEHIND_HTTPS_PROXY=1` generates HTTPS URLs when a reverse proxy terminates
+  TLS in front of the development server.
 - `UBUNTU_MIRROR` selects an alternative Ubuntu package mirror.
 - `PROXY_URL` changes the HTTP/HTTPS proxy from
   `http://128.0.205.252:3128`; set it to an empty value to disable the proxy.
@@ -40,8 +44,11 @@ The following optional environment variables customize the setup:
 For example:
 
 ```console
-$ HOST_PORT=8080 docker compose up --build
+$ EXTERNAL_HOST=testing.example.com:9991 docker compose up --build
 ```
+
+When using an HTTPS reverse proxy on its standard port, omit the port and run
+`BEHIND_HTTPS_PROXY=1 EXTERNAL_HOST=testing.example.com docker compose up`.
 
 Run development commands inside the environment with `docker compose exec`:
 
