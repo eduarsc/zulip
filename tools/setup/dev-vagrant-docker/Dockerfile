@@ -48,7 +48,12 @@ RUN \
     && curl -fLsS --retry 3 -o ~vagrant/.ssh/authorized_keys 'https://raw.githubusercontent.com/hashicorp/vagrant/v2.4.0/keys/vagrant.pub' \
     && echo '55009a554ba2d409565018498f1ad5946854bf90fa8d13fd3fdc2faa102c1122  /home/vagrant/.ssh/authorized_keys' | sha256sum -c \
     && chown -R vagrant: ~vagrant/.ssh \
-    && echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant
+    && echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant \
+    # Provisioning runs package managers through sudo, so preserve the proxy
+    # configuration supplied by Compose for those subprocesses.
+    && echo 'Defaults env_keep += "HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy"' > /etc/sudoers.d/zulip-development-proxy \
+    && chmod 0440 /etc/sudoers.d/vagrant /etc/sudoers.d/zulip-development-proxy \
+    && visudo --check --file=/etc/sudoers.d/zulip-development-proxy
 
 CMD ["/bin/systemctl"]
 

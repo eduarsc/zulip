@@ -33,7 +33,8 @@ The following optional environment variables customize the setup:
 - `PROXY_URL` changes the HTTP/HTTPS proxy from
   `http://128.0.205.252:3128`; set it to an empty value to disable the proxy.
 - `NO_PROXY` changes the hosts that bypass the proxy. Its default includes all
-  services used through the container's loopback interface.
+  services used through the container's loopback interface. The development
+  image preserves these proxy variables when provisioning commands use `sudo`.
 
 For example:
 
