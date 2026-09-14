@@ -35,6 +35,7 @@ fi
 # init system. CODESPACES makes it start them explicitly in a container.
 CODESPACES=true "$ZULIP_PATH/tools/setup/vagrant-provision"
 
-# Vagrant activates this environment from the interactive shell profile.
-source "$ZULIP_PATH/.venv/bin/activate"
+# Vagrant normally configures these from the interactive shell profile.
+export VIRTUAL_ENV="$ZULIP_PATH/.venv"
+export PATH="$VIRTUAL_ENV/bin:$PATH"
 exec "$ZULIP_PATH/tools/run-dev"
