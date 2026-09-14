@@ -1,0 +1,29 @@
+name: zulip-development
+
+services:
+  zulip:
+    build:
+      context: tools/setup/dev-vagrant-docker
+      args:
+        VAGRANT_UID: "${HOST_UID:-1000}"
+        UBUNTU_MIRROR: "${UBUNTU_MIRROR:-}"
+    init: true
+    stdin_open: true
+    tty: true
+    user: vagrant
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 65536
+    environment:
+      UBUNTU_MIRROR: "${UBUNTU_MIRROR:-}"
+      ZULIP_PATH: /workspace/zulip
+    ports:
+      - "127.0.0.1:${HOST_PORT:-9991}:9991"
+      - "127.0.0.1:${WEBPACK_PORT:-9994}:9994"
+      - "127.0.0.1:${HELP_CENTER_PORT:-9995}:9995"
+    volumes:
+      - .:/workspace/zulip
+    working_dir: /workspace/zulip
+    entrypoint: /workspace/zulip/tools/setup/dev-compose/entrypoint
+    stop_grace_period: 30s

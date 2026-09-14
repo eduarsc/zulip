@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# tools/provision normally expects services to have been started by the host's
+# init system. CODESPACES makes it start them explicitly in a container.
+CODESPACES=true "$ZULIP_PATH/tools/setup/vagrant-provision"
+
+# Vagrant activates this environment from the interactive shell profile.
+source "$ZULIP_PATH/.venv/bin/activate"
+exec "$ZULIP_PATH/tools/run-dev"
