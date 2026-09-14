@@ -51,7 +51,7 @@ RUN \
     && echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant \
     # Provisioning runs package managers through sudo, so preserve the proxy
     # configuration supplied by Compose for those subprocesses.
-    && echo 'Defaults env_keep += "HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy"' > /etc/sudoers.d/zulip-development-proxy \
+    && echo 'Defaults env_keep += "HTTP_PROXY HTTPS_PROXY NO_PROXY NODE_USE_ENV_PROXY http_proxy https_proxy no_proxy"' > /etc/sudoers.d/zulip-development-proxy \
     && chmod 0440 /etc/sudoers.d/vagrant /etc/sudoers.d/zulip-development-proxy \
     && visudo --check --file=/etc/sudoers.d/zulip-development-proxy
 

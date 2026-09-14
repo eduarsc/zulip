@@ -35,6 +35,7 @@ The following optional environment variables customize the setup:
 - `NO_PROXY` changes the hosts that bypass the proxy. Its default includes all
   services used through the container's loopback interface. The development
   image preserves these proxy variables when provisioning commands use `sudo`.
+  `NODE_USE_ENV_PROXY` is enabled so Node and Corepack use the same proxy.
 
 For example:
 

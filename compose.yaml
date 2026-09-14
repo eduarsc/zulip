@@ -25,6 +25,7 @@ services:
         hard: 65536
     environment:
       <<: *proxy-environment
+      NODE_USE_ENV_PROXY: "1"
       UBUNTU_MIRROR: "${UBUNTU_MIRROR:-}"
       ZULIP_PATH: /workspace/zulip
     ports:
