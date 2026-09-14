@@ -30,6 +30,10 @@ The following optional environment variables customize the setup:
 - `WEBPACK_PORT` changes the exposed webpack port from `9994`.
 - `HELP_CENTER_PORT` changes the exposed help center port from `9995`.
 - `UBUNTU_MIRROR` selects an alternative Ubuntu package mirror.
+- `PROXY_URL` changes the HTTP/HTTPS proxy from
+  `http://128.0.205.252:3128`; set it to an empty value to disable the proxy.
+- `NO_PROXY` changes the hosts that bypass the proxy. Its default includes all
+  services used through the container's loopback interface.
 
 For example:
 

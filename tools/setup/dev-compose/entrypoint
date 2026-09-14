@@ -28,7 +28,9 @@ if ((EUID == 0)); then
     usermod --gid "$workspace_group" vagrant
     chown -R vagrant:"$workspace_group" /home/vagrant
 
-    exec sudo --preserve-env=UBUNTU_MIRROR,ZULIP_PATH -H -u vagrant "$0" "$@"
+    exec sudo \
+        --preserve-env=HTTP_PROXY,HTTPS_PROXY,NO_PROXY,http_proxy,https_proxy,no_proxy,UBUNTU_MIRROR,ZULIP_PATH \
+        -H -u vagrant "$0" "$@"
 fi
 
 # tools/provision normally expects services to have been started by the host's
