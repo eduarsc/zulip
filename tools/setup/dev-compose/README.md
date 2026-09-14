@@ -49,6 +49,8 @@ $ EXTERNAL_HOST=testing.example.com:9991 docker compose up --build
 
 When using an HTTPS reverse proxy on its standard port, omit the port and run
 `BEHIND_HTTPS_PROXY=1 EXTERNAL_HOST=testing.example.com docker compose up`.
+Store these values in a `.env` file next to `compose.yaml` so every Compose
+invocation uses the same browser-facing host.
 
 Run development commands inside the environment with `docker compose exec`:
 

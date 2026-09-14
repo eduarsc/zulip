@@ -40,4 +40,10 @@ CODESPACES=true "$ZULIP_PATH/tools/setup/vagrant-provision"
 # Vagrant normally configures these from the interactive shell profile.
 export VIRTUAL_ENV="$ZULIP_PATH/.venv"
 export PATH="$VIRTUAL_ENV/bin:$PATH"
-exec "$ZULIP_PATH/tools/run-dev"
+
+run_dev_args=()
+if [[ -n ${BEHIND_HTTPS_PROXY:-} ]]; then
+    run_dev_args+=(--behind-https-proxy)
+fi
+
+exec "$ZULIP_PATH/tools/run-dev" "${run_dev_args[@]}"
