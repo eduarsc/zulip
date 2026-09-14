@@ -5,12 +5,11 @@ services:
     build:
       context: tools/setup/dev-vagrant-docker
       args:
-        VAGRANT_UID: "${HOST_UID:-1000}"
+        VAGRANT_UID: "1000"
         UBUNTU_MIRROR: "${UBUNTU_MIRROR:-}"
     init: true
     stdin_open: true
     tty: true
-    user: vagrant
     ulimits:
       nofile:
         soft: 1024

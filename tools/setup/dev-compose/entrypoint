@@ -1,6 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if ((EUID == 0)); then
+    workspace_uid=$(stat -c %u "$ZULIP_PATH")
+    workspace_gid=$(stat -c %g "$ZULIP_PATH")
+
+    if ((workspace_uid == 0)); then
+        echo "The Zulip checkout is owned by root." >&2
+        echo "Change its ownership to the non-root user that runs Docker Compose." >&2
+        exit 1
+    fi
+
+    current_uid=$(id -u vagrant)
+    if ((workspace_uid != current_uid)); then
+        if getent passwd "$workspace_uid" >/dev/null; then
+            echo "Cannot assign UID $workspace_uid to vagrant; it is already in use." >&2
+            exit 1
+        fi
+        usermod --uid "$workspace_uid" vagrant
+    fi
+
+    workspace_group=$(getent group "$workspace_gid" | cut -d: -f1 || true)
+    if [[ -z $workspace_group ]]; then
+        groupmod --gid "$workspace_gid" vagrant
+        workspace_group=vagrant
+    fi
+    usermod --gid "$workspace_group" vagrant
+    chown -R vagrant:"$workspace_group" /home/vagrant
+
+    exec sudo --preserve-env=UBUNTU_MIRROR,ZULIP_PATH -H -u vagrant "$0" "$@"
+fi
+
 # tools/provision normally expects services to have been started by the host's
 # init system. CODESPACES makes it start them explicitly in a container.
 CODESPACES=true "$ZULIP_PATH/tools/setup/vagrant-provision"
